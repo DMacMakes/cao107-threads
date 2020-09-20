@@ -6,7 +6,6 @@
 #include <Windows.h>
 using namespace std;
 
-int loadRands(uint16_t* destination);
 int loadRandsFile(uint16_t* destination, string fileName);
 bool quickSort(uint16_t* toSort, int leftIndex, int rightIndex, int pivot);
 LONGLONG qpfElapsedMicroseconds(const LARGE_INTEGER& start, const LARGE_INTEGER& end);
@@ -20,14 +19,9 @@ int main()
 
     for (int i = 0; i < listCount; i++)
     {
-        cout << "\t Declaring list " << i << endl;
         randlists[i] = new uint16_t[listLength];
         loadRandsFile(randlists[i], "randoms/100K_rands_uint16_" + to_string(i) + ".txt");
     }
-//    randlists[0][0] = 25;
-
-    //uint16_t* rands = new uint16_t[4][100'000];
-    //int linesCount = loadRands(rands);
 
     cout << "\n\t == lists to sort: " << listCount << " ==\n";
     cout << "\n\t == rands per list: " << listLength << " ==\n\n";
@@ -70,34 +64,21 @@ LONGLONG qpfElapsedMicroseconds(const LARGE_INTEGER& start, const LARGE_INTEGER&
 bool quickSort(uint16_t* toSort, int leftIndex, int rightIndex, int pivot)
 {
     cout << "\t *sorting* \n";
+    /*
     cout << "\t first 10: ";
+    
     for (int i = 0; i < 10; i++)
     {
         cout << toSort[i] << " ";
     }
     cout << "\n";
-
+    */
     for (int i = 0; i <= rightIndex; i++)
     {
         // Square root each number to use up some clock.
         toSort[i] = static_cast<uint16_t>(std::roundf(std::sqrtf(toSort[i])));
     }
     return true;
-}
-
-int loadRands(uint16_t* destination)
-{
-    ifstream randsFile;
-    string line;
-    int lineCount = 0;
-    randsFile.open("rand_1m_uint16.txt", ios::in);
-    while (getline(randsFile, line))
-    {
-        destination[lineCount] = atoi(line.c_str());
-        lineCount += 1;
-    }
-    randsFile.close();
-    return lineCount;
 }
 
 int loadRandsFile(uint16_t* destination, string fileName)

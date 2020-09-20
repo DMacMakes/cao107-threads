@@ -2,6 +2,17 @@
 
 Creates a 2D array (array containing arrays) of unsigned 16 bit (short) integers. A function is then called in a loop, loading **up to 16 text files**, each containing **100,000 random** integers between in the range {0..65535} (see randoms folder).  
 
+## The task
+
+* Use threads to sort each of the lists.
+* Try applying quicksort to the arrays in sequence.
+* Measure the overall time taken to sort the lists in milliseconds. You can use the existing timer (microsoft query performance counter)
+* Use two threads to sort two at a time till you get through all the lists.
+* Try scaling up to 4, 8, 16 threads. 
+* Is there a thread count where you stop gaining speed? Why would that be the count?
+
+## Notes
+
 ### Funky array declarations
 
 It looks weird where the arrays are declared. It uses `**`, and `new`, and the array is initialised on the right side. All possibly new syntax for you guys. On the up side, I've already written it so you don't have to do it from scratch. 
