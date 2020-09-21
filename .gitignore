@@ -352,3 +352,6 @@ MigrationBackup/
 # Custom coloured folders by folderico
 folder*.ico
 desktop.ini
+
+# My make build folders
+[Bb]uild/
