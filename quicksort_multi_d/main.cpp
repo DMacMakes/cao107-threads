@@ -2,14 +2,13 @@
 //
 #include <iostream>
 #include <fstream>
+#include <cmath>
 #include <string>
-#include <Windows.h>
+#include "Timer.h"
 using namespace std;
 
 int loadRandsFile(uint16_t* destination, string fileName);
 bool quickSort(uint16_t* toSort, int leftIndex, int rightIndex, int pivot);
-LONGLONG qpfElapsedMicroseconds(const LARGE_INTEGER& start, const LARGE_INTEGER& end);
-float microToMilliseconds(int microSeconds);
 
 int main()
 {
@@ -26,39 +25,19 @@ int main()
     cout << "\n\t == lists to sort: " << listCount << " ==\n";
     cout << "\n\t == rands per list: " << listLength << " ==\n\n";
 
-    LARGE_INTEGER startTime;
-    QueryPerformanceCounter(&startTime);
+    dmac::Timer timer;
 
+    timer.start();
     for (int i = 0; i < listCount; i++)
     {
         quickSort(randlists[i], 0, listLength - 1, listLength - 1);
     }
-    LARGE_INTEGER endTime;
-    QueryPerformanceCounter(&endTime);
+    timer.stop();
 
-    LONGLONG elapsedMicroseconds = qpfElapsedMicroseconds(startTime, endTime);
-
-    float elapsedMilliseconds = microToMilliseconds(elapsedMicroseconds);
     cout << "\n\t TIME TAKEN\n";
     cout << "\t ------------------\n";
-    cout << "\t " << elapsedMicroseconds << " microseconds \n";
-    cout << "\t " << elapsedMilliseconds << " milliseconds \n";
-
+    cout << "\t " << timer.timeTakenMilli() << " milliseconds \n";
     return 0;
-}
-
-LONGLONG qpfElapsedMicroseconds(const LARGE_INTEGER& start, const LARGE_INTEGER& end)
-{
-    LARGE_INTEGER ticksPerSecond;
-    QueryPerformanceFrequency(&ticksPerSecond);         // Find the speed of the counter
-    LARGE_INTEGER ticksElapsed;
-    ticksElapsed.QuadPart = end.QuadPart - start.QuadPart;
-
-    LARGE_INTEGER microsecondsElapsed;
-    microsecondsElapsed.QuadPart = ticksElapsed.QuadPart * 1'000'000;
-    microsecondsElapsed.QuadPart /= ticksPerSecond.QuadPart;
-
-    return microsecondsElapsed.QuadPart;
 }
 
 bool quickSort(uint16_t* toSort, int leftIndex, int rightIndex, int pivot)
@@ -76,7 +55,7 @@ bool quickSort(uint16_t* toSort, int leftIndex, int rightIndex, int pivot)
     for (int i = 0; i <= rightIndex; i++)
     {
         // Square root each number to use up some clock.
-        toSort[i] = static_cast<uint16_t>(std::roundf(std::sqrtf(toSort[i])));
+        toSort[i] = static_cast<uint16_t>(std::round(std::sqrt(toSort[i])));
     }
     return true;
 }
@@ -95,9 +74,3 @@ int loadRandsFile(uint16_t* destination, string fileName)
     randsFile.close();
     return lineCount;
 }
-
-float microToMilliseconds(int microseconds)
-{
-    return static_cast<float>(microseconds) / 1000.0f;
-}
-

@@ -3,21 +3,25 @@
 #include <array>
 #include <chrono>
 #include <cmath>
+#include "Timer.h"
 using namespace std;
-using namespace std::chrono;
 
 bool quicksort(int* numbers, int left, int right)
 {
   // Choose right as starting pivot
   int pivot = right;
   // Is left bigger than pivot?
-  cout << "\t *sort sort wow a million sqrts eh?*\n";
-  float wango=22020303.0f;
-  for (int i=0; i<150000; i++)
+  for (int i = 0; i < right; i++)
   {
-    wango = sqrt(wango);
+	  numbers[i] = sqrt(numbers[i]);
   }
-  cout << "\t Bye wango: " << wango << endl;
+
+  cout << "\t Doing 100K sqrts\n";
+  float wango=22020303.0f;
+  for (int i=0; i<100'000; i++)
+  {
+    wango = sqrtf(wango);
+  }
   // Call yerself
   // if(left != right)
   // quicksort(numbers,left,pivot-1);
@@ -25,18 +29,39 @@ bool quicksort(int* numbers, int left, int right)
   return true;
 }
 
+void displayArray(int* theArray, int length)
+{
+	cout << "\t>>>> LIST [";
+	for (int i = 0; i < length; i++)
+	{
+		cout << theArray[i];
+		if (i < length - 1) cout << ",";
+	}
+	cout << "]\n";
+}
+
 int main()
 {
-  high_resolution_clock::time_point start = high_resolution_clock::now();
   // Make an array of ints
-  int sortMe[13]{20, 4, 1, 15, 9, 2, 24, 22, 8, 14, 5, 5, 7};
+  const int LIST_LENGTH = 13;
+  int sortMe[LIST_LENGTH]{20, 4, 1, 15, 9, 2, 24, 22, 8, 14, 5, 5, 7};
 
-  // Display them
-  quicksort(sortMe, 0,12);
-  // display them
-  high_resolution_clock::time_point end = high_resolution_clock::now();
-  auto timeTaken = end - start;
-  auto millis = duration_cast<milliseconds>(timeTaken);
-  cout << "quicksort ran in " << millis.count() << " ms";
-	//cout << "Hi bro, nice qs" << endl;
+  cout << "\n";
+  displayArray(sortMe, LIST_LENGTH);
+  cout << "\n";
+
+  dmac::Timer timer;
+  timer.start();
+  quicksort(sortMe, 0, LIST_LENGTH);
+  timer.stop();
+  
+  cout << "\n";
+  displayArray(sortMe, LIST_LENGTH);
+  cout << "\n";
+
+  cout << "\n\t-----------------------------------------\n";
+  cout << "\t#######   quicksort time: " << timer.timeTakenMilli() << " milliseconds   ######\n";
+  cout << "\t-----------------------------------------\n";
+
+  //cout << "Hi bro, nice qs" << endl;
 }

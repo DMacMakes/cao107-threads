@@ -1,11 +1,11 @@
 # vim: set noet:
 
 CC=g++
-CFLAGS=-I. -lpthread -I../inc/gsl/include
+CFLAGS=-std=c++17 -I. -lpthread -I../inc/gsl/include
 OUTDIR=build
 SOURCES=main.cpp Timer.cpp
 DEPS=Timer.h
-EXE=$(OUTDIR)/quicksort_basic
+EXE=$(OUTDIR)/quicksort_slow
 OBJ=$(patsubst %.cpp, $(OUTDIR)/%.o, $(SOURCES))
 
 all: build $(EXE)
