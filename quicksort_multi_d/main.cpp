@@ -1,24 +1,23 @@
 #include <iostream>
 #include <fstream>
-#include <cmath>
 #include <string>
 #include "Timer.h"
 using namespace std;
 
-int loadRandsFile(uint16_t* destination, string fileName);
-bool writeRandsFile(uint16_t* randsArray, int randCount, string filename);
+int loadRandsFile(int* destination, string fileName);
+bool writeRandsFile(int* randsArray, int randCount, string filename);
 
 // Used by quicksortInts: chooses pivot number, moves lower numbers left, higher numbers right
-int choosePivotAndPartition(uint16_t* numbers, int left, int right);
+int choosePivotAndPartition(int* numbers, int left, int right);
 
 // Quicksort a portion (or all of) an array
 // numbers: A c array of unsigned 16 bit ints. left: The left end of our array portion
 // right: The right end of our array portion
-void quicksort(uint16_t* numbers, int left, int right);
+void quicksort(int* numbers, int left, int right);
 
 // Sort a basic c array of integers into ascending order provided:
 // 1. Start of the array and 2. Size of the array
-void sortIntArray(uint16_t* numbers, int size);
+void sortIntArray(int* numbers, int size);
 
 int main()
 {
@@ -26,18 +25,18 @@ int main()
   int listLength = 100'000;   // How many numbers are in each list?
   // Create on small array of pointers, one for each list we'll load.
   // The size will equal listsCount. 
-  uint16_t** randlists = new uint16_t * [listsCount];
+  int** randlists = new int * [listsCount];
 
   cout << "\n\t == Lists to sort: " << listsCount << " ==\n";
   cout << "\t == Random numbers in each list: " << listLength << " ==\n\n";
   cout << "\t [ Loading randoms from text files... ]\n\n";
   // Now create the big arrays, each one with enough memory to hold
-  // `listLength` numbers. In this case, 100,000 short (16 bit) integers
+  // `listLength` numbers. In this case, 100,000 integers
   // Store the pointers to each array in "randlists".
   // Finally, load a text file for each array and fill it.
   for (int i = 0; i < listsCount; i++)
   {
-    randlists[i] = new uint16_t[listLength];  // create 100,000 unsigned 16bit integer array
+    randlists[i] = new int[listLength];  // create 100,000 integer array
     // Load 100,000 random numbers from a text file into the array.
     loadRandsFile(randlists[i], "randoms/100K_rands_uint16_" + to_string(i) + ".txt");
   }
@@ -59,7 +58,7 @@ int main()
   cout << "\t ---------------------------------------\n";
 }
 
-int loadRandsFile(uint16_t* destination, string fileName)
+int loadRandsFile(int* destination, string fileName)
 {
   ifstream randsFile;
   string line;
@@ -74,7 +73,7 @@ int loadRandsFile(uint16_t* destination, string fileName)
   return lineCount;
 }
 
-bool writeRandsFile(uint16_t* randsArray, int randCount, string fileName)
+bool writeRandsFile(int* randsArray, int randCount, string fileName)
 {
   ofstream randsFile;
   randsFile.open(fileName, ios::out);
@@ -86,13 +85,13 @@ bool writeRandsFile(uint16_t* randsArray, int randCount, string fileName)
   return true;
 }
 
-// Kick off quicksort for an array of unsigned short integers
-void sortIntArray(uint16_t* numbers, int size)
+// Kick off quicksort for an array of integers
+void sortIntArray(int* numbers, int size)
 {
   quicksort(numbers, 0, size - 1);
 }
 
-void quicksort(uint16_t* numbers, int left, int right)
+void quicksort(int* numbers, int left, int right)
 {
   // If our left and right indicies haven't finally collided 
   int pivotIndex = 0;
@@ -107,7 +106,7 @@ void quicksort(uint16_t* numbers, int left, int right)
   }
 }
 
-int choosePivotAndPartition(uint16_t* numbers, int left, int right)
+int choosePivotAndPartition(int* numbers, int left, int right)
 {
   // Choose the left most number as the pivot.
   // The left wall, the last known place we moved a lower-than-pivot number.
