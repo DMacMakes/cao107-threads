@@ -38,7 +38,7 @@ int main()
   {
     randlists[i] = new int[listLength];  // create 100,000 integer array
     // Load 100,000 random numbers from a text file into the array.
-    loadRandsFile(randlists[i], "randoms/100K_rands_uint16_" + to_string(i) + ".txt");
+    loadRandsFile(randlists[i], "../randoms/100K_rands_uint16_" + to_string(i) + ".txt");
   }
 
   // Create a precision timer and start timing
