@@ -5,52 +5,51 @@
 #include "Timer.h"
 using namespace std;
 
+// There are files holding sets of 100,000 random numbers in ../randoms/
 int loadRandsFile(vector<int>& destination, string fileName);
+// Write an array to file if you want to confirm sort is working
 bool writeRandsFile(vector<int>& randsArray, string filename);
-void swap(int& left, int& right);
 
-// Sort a basic c array of integers into ascending order provided:
-// 1. Start of the array and 2. Size of the array
-void sortIntArray(vector<int>& numbers);
-// Quicksort a portion (or all of) a list of ints
-// right: The right end of our array portion
+// Quicksort a portion (or all of) a vector of ints in ascending order
+// args: reference to the vector, start and end indices of the section we want to sort
 void quicksort(vector<int>& numbers, int start, int end);
-// Used by quicksortInts: chooses pivot number, moves lower numbers left, higher numbers right
+// Used by quicksort: chooses pivot, moves lower numbers left, higher numbers right
 int partition(vector<int>& numbers, int start, int end);
+// Swap the values of two variables (using references)
+void swap(int& left, int& right);
 
 int main()
 {
-  int listsCount = 4;         // How many lists would you like to load and sort?
+  int listsCount = 8;         // How many lists would you like to load and sort?
   int listLength = 100'000;   // How many numbers are in each list?
-  vector<vector<int>> randlists(listsCount);
+  vector<vector<int>> randLists(listsCount);
   
-  cout << "\n\t == Lists to sort: " << listsCount << " ==\n";
-  cout << "\t == Random numbers in each list: " << listLength << " ==\n\n";
-  cout << "\t [ Loading randoms from text files... ]\n\n";
+  cout << "\nQUICKSORT SINGLE THREADED\n";
+  cout << "Loading random number text files..\n";
 
   //Allocate some nice big vectors and load 100K randoms into each
   for (int i = 0; i < listsCount; i++)
   {
-    randlists[i] = (vector<int>(listLength,0));  // create 100,000 integer array
+    randLists[i] = (vector<int>(listLength,0));  // create 100,000 integer array
     // Load 100,000 random numbers from a text file into the vector
-    loadRandsFile(randlists[i], "../randoms/100K_rands_uint16_" + to_string(i) + ".txt");
+    loadRandsFile(randLists[i], "../randoms/100K_rands_" + to_string(i) + ".txt");
   }
-  cout << "\t Beginning sort\n";
+  cout << "\nNow sorting " << listsCount << " lists of " << listLength << " random integers..\n";
   // Create a precision timer and start timing
   dmac::Timer timer;
   timer.start();
   // Sorts our lists
   for (int i = 0; i < listsCount; i++)
   {
-    sortIntArray(randlists[i]);
+    quicksort(randLists[i], 0, randLists[i].size());
   }
   timer.stop();
 
-  cout << "\t ---------------------------------------\n";
-  cout << "\t Lists sorted! \n";
-  cout << "\t Total sort time: " << timer.timeTakenMilli() << " milliseconds \n";
-  cout << "\t ---------------------------------------\n";
-  writeRandsFile(randlists[0], "rands0_out.txt");
+  cout << "\n---------------------------------------\n";
+  cout << "Lists sorted! \n";
+  cout << "Total sort time: " << timer.timeTakenMilli() << " milliseconds \n";
+  cout << "---------------------------------------\n";
+  //writeRandsFile(randLists[0], "rands0_out.txt");
 }
 
 int loadRandsFile(vector<int>& destination, string fileName)
@@ -81,11 +80,6 @@ bool writeRandsFile(vector<int>& randsArray, string fileName)
   return true;
 }
 
-// Kick off quicksort for an array of integers
-void sortIntArray(vector<int>& numbers)
-{
-  quicksort(numbers, 0, numbers.size()-1);
-}
 
 void quicksort(vector<int>& numbers, int start, int end)
 {
@@ -114,7 +108,7 @@ int partition(vector<int>& numbers, int left, int right)
       // Swap the small number with the large one next to the wall 
       swap(numbers[i], numbers[leftWall + 1]);
       leftWall += 1;	// Move the wall to gobble up the nice low value.
-    } 
+    }
   }
   // Swap original pivot (first item in list) with small number at wall
   swap(numbers[leftWall], numbers[left]);
