@@ -13,13 +13,12 @@ void quicksort(vector<int>& numbers, int start, int end);
 int partition(vector<int>& numbers, int start, int end);
 // Swap the values of two variables (using references)
 void swap(int& left, int& right);
-
+// Simple function to print out the contents of a vector (of integers)
 void displayVector(vector<int>& theVector);
 
 int main()
 {
   vector<int>randomInts {13, 4, 20, 15, 13, 9, 2, 17, 1, 24, 22, 8, 14, 5, 13, 5, 7};
-
   cout << "\nUnsorted integers:\n";
   displayVector(randomInts);
   
@@ -30,12 +29,9 @@ int main()
   
   cout << "\nSorted integers:\n";
   displayVector(randomInts);
-  
   cout << "\n--------------------------------------------\n";
   cout << "Total sort time: " << timer.timeTakenMilli() << " milliseconds.\n";
   cout << "--------------------------------------------\n";
-
-  //cout << "Hi bro, nice qs" << endl;
 }
 
 void quicksort(vector<int>& numbers, int start, int end)
@@ -81,14 +77,14 @@ void swap(int& left, int& right)
 
 void displayVector(vector<int>& theVector)
 {
-	cout << "[";
-	for (int i = 0; i < theVector.size(); i++)
-	{
-		cout << theVector[i];
-    if (i < theVector.size())
+  cout << "[";
+  for (int i = 0; i < theVector.size(); i++)
+  {
+    cout << theVector[i];
+    if (i < theVector.size()-1)
     {
       cout << ",";
     }
-	}
-	cout << "]\n";
+  }
+  cout << "]\n";
 }
