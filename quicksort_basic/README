@@ -1,8 +1,0 @@
-# Quicksort basic
-
-The idea was to make a very simple quicksort on a small array and test it. 
-
-Goals:
-* makefile for linux compile
-* get the algo straight before multithreading big lists of file-sourced randoms.
-* cross platform kinda accurate timer (instead of ms qpc)
