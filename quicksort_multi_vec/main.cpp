@@ -41,7 +41,7 @@ int main()
   // Sorts our lists
   for (int i = 0; i < listsCount; i++)
   {
-    quicksort(randLists[i], 0, randLists[i].size());
+    quicksort(randLists[i], 0, randLists[i].size()-1);
   }
   timer.stop();
 
