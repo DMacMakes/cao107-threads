@@ -1,7 +1,7 @@
 # vim: set noet:
 
 CC=g++
-CFLAGS=-I. -lpthread -I../inc/gsl/include
+CFLAGS=-I. -pthread -I../inc/gsl/include
 OUTDIR=build
 SOURCES=main_tix.cpp
 #DEPS=Timer.h

@@ -68,9 +68,15 @@ int main()
   cout << "Orders ready to fly: " << orders.size() << "\n";
 
   // Try doing it on after another, with one cashier.
-  for ( auto& order : orders )
+  vector<thread> threads;
+  for ( Order& order : orders )
   {
-    handleOrder(order);
+    threads.push_back( thread(handleOrder, ref(order) ));
+  }
+
+  for ( thread& thread : threads)
+  {
+    thread.join();
   }
 
   cout << "Orders completed: \n";
