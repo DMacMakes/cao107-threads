@@ -355,3 +355,5 @@ desktop.ini
 
 # My make build folders
 [Bb]uild/
+
+.vscode/
