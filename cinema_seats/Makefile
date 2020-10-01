@@ -4,7 +4,7 @@ CC=g++
 CFLAGS=-I. -pthread -I../inc/gsl/include
 OUTDIR=build
 SOURCES=main.cpp
-DEPS=termcolor.h
+#DEPS=termcolor.h
 EXE=$(OUTDIR)/cinema_seats
 OBJ=$(patsubst %.cpp, $(OUTDIR)/%.o, $(SOURCES))
 
@@ -16,7 +16,7 @@ all: build $(EXE)
 $(EXE): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
-$(OUTDIR)/%.o : %.cpp $(DEPS)
+$(OUTDIR)/%.o : %.cpp #$(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $< 
 
 build:
