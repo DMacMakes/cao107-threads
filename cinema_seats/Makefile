@@ -3,9 +3,9 @@
 CC=g++
 CFLAGS=-I. -pthread -I../inc/gsl/include
 OUTDIR=build
-SOURCES=main_tix.cpp
-#DEPS=Timer.h
-EXE=$(OUTDIR)/movie_tix
+SOURCES=main.cpp
+DEPS=termcolor.h
+EXE=$(OUTDIR)/cinema_seats
 OBJ=$(patsubst %.cpp, $(OUTDIR)/%.o, $(SOURCES))
 
 all: build $(EXE)
@@ -16,7 +16,7 @@ all: build $(EXE)
 $(EXE): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 
-$(OUTDIR)/%.o : %.cpp #$(DEPS)
+$(OUTDIR)/%.o : %.cpp $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $< 
 
 build:
@@ -24,3 +24,12 @@ build:
 
 clean:
 	@rm -rf build
+	
+cleanlibs:
+	@rm build/*.o
+	
+cleansolution:
+	@rm -rf x64
+	@rm -rf Debug
+	@rm -rf Release
+	@rm -rf .vs

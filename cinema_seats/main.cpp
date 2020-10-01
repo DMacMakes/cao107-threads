@@ -10,9 +10,19 @@ using namespace std;
 // It returns a result telling you if you succeeded, and what tickets you got.
 // Tickets are dispensed to 
 
+const string red = "\033[31m";
+const string white = "\033[37m";
+const string green = "\033[32m";
+const string yellow = "\033[33m";
+const string blue = "\033[34m";
+const string magenta = "\033[35m";
+const string cyan = "\033[36m";
+const string on_grey = "\033[40m";
+
 struct Order
 {
   string custName;
+  string color;
   vector<string> seatIds;
 };
 vector<Order> ordersCompleted;
@@ -32,7 +42,7 @@ void handleOrder(Order& order)
 void printOrder(Order& order)
 {
   cout << "Order: \n";
-  cout << "\tcustomer: " << order.custName << ", seats: ";
+  cout << "\tcustomer: " << order.color << order.custName << white << ", seats: ";
   for ( auto& seatId : order.seatIds )
   {
     cout << seatId << " ";
@@ -49,12 +59,12 @@ void printOrder(Order& order)
 int main()
 {
   auto orders = vector<Order> { 
-    { "red1",   {"G1", "G2", "G3"}},
-    { "green2", {"G4", "G5"}},
-    { "blue3",  {"G3", "G4"}},
-    { "yellow4",{"G1", "G2", "G3"}},
-    { "pink5",  {"G2","G3","G4"}},
-    { "grey6",  {"G2","G3"}},
+    { "Cust 1", red, {"G1", "G2", "G3"}},
+    { "Cust 2", blue, {"G4", "G5"}},
+    { "Cust 3", green,  {"G3", "G4"}},
+    { "Cust 4", yellow, {"G1", "G2", "G3"}},
+    { "Cust 5", magenta,  {"G2","G3","G4"}},
+    { "Cust 6", cyan,  {"G2","G3"}},
     };
 
   auto seats = vector<Seat> {
