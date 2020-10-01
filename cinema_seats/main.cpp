@@ -35,7 +35,7 @@ struct Seat
 
 void handleOrder(Order& order)
 {
-  cout << "Handling order for " << order.custName << "\n";
+  cout << "Handling order for " << order.color << order.custName << white << "\n";
   ordersCompleted.push_back(order);
 }
 
@@ -77,16 +77,10 @@ int main()
 
   cout << "Orders ready to fly: " << orders.size() << "\n";
 
-  // Try doing it on after another, with one cashier.
-  vector<thread> threads;
-  for ( Order& order : orders )
+  // One after another, with one cashier.
+  for (Order& order : orders)
   {
-    threads.push_back( thread(handleOrder, ref(order) ));
-  }
-
-  for ( thread& thread : threads)
-  {
-    thread.join();
+    handleOrder(order);
   }
 
   cout << "Orders completed: \n";
