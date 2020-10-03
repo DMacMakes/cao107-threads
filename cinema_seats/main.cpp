@@ -27,7 +27,16 @@
 //  5. Shows tickets sold.
 //  6. Works great.
 //
-//T YOUR TASKS
+//  THE READING:
+//
+//  You will find the answers you seek in the following sections of 
+//  'Concurrency in Action', downloadable from the CAO107 resources page
+//  on DMDOCS (my notes).
+//
+//  3.1.1, 3.1.2 Race Conditions (p35) and avoiding them.
+//  3.2, 3.2.1 Protecting shared data with mutexes
+//  
+//  YOUR TASKS
 //  1. Deploy your six new staff! That is: change from a single seller 
 //     (sellSeats function) to multiple sellers (threads). This is almost
 //     identical to our quicksort threading solution.
@@ -44,15 +53,18 @@
 //        process can be made. What changes would you make to solve each problem?
 //        Think about this in plain english in terms of how you'd handle the 
 //        problem of several people selling from the same pool of products. 
-//    3.  Refer to chapter 3 of Concurrency In Action. (See CAO107 Resources
-//        page on my class notes, DMDOCS). What general type of parallel
-//        programming features does C++ offer that we can use to handle 
-//        these "race condition" problems?
+//    3.  Refer to chapter 3 of Concurrency In Action (see THE READING).
+//        What parallel programming features does C++ offer that can help us 
+//        with these "race condition" problems? How do they help? (In your own
+//        words, with short quotes allowed)
 //    4.  Write some pseudo code (basically shortened, plain english code 
 //        to fix each problem, without having to use the proper syntax
 //        of C++. You don't need to show the whole program, just the areas
 //        you need real changes. See a pseudocde sample below in TIPS.
-//        Here's an eg:
+//
+//        If you're not sure about how to approach pseudocode, here's an 
+//        example from sellSeats()
+//
 //        for each order
 //          print out the order in colour
 //          if all the seats are available
@@ -68,7 +80,11 @@
 //  TIPS: 
 //  * Look in `structures.h` to see what makes up a `Seat` or an `Order`.
 //  * Colours are defined in `colornames.h`
-//  * Here's an eg of some PSEUDOCODE describing part of sellSeats:
+//
+//  PSEUDOCODE 
+//
+//  If you're not sure about the pseudocode, here's an example of a section
+//  of the sellSeats() function.
 //
 //    for each order
 //      print out the order in colour
@@ -81,6 +97,7 @@
 //          print "unavailable"
 //      end if
 //    end for
+//
 //////////////////////////////////////////////////////////////////////////////
 
 #include <thread>
