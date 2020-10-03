@@ -3,3 +3,4 @@
 *.[jJ][pP][gG] filter=lfs diff=lfs merge=lfs -text
 *.[zZ][iI][pP] filter=lfs diff=lfs merge=lfs -text
 *.7[zZ] filter=lfs diff=lfs merge=lfs -text
+*.[pP][dD][fF] filter=lfs diff=lfs merge=lfs -text
