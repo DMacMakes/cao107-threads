@@ -100,34 +100,25 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-#include <thread>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
-#include <mutex>
+#include <thread>
+#include <chrono>
 #include "colornames.h"
 #include "structures.h"
-#include "chrono"
 using namespace std;
-// Need available movie seats
-// Need booking system to attempt to book them
-// 5 cashiers can be asked to make bookings
-// It returns a result telling you if you succeeded, and what tickets you got.
-// Tickets are dispensed to 
+
 vector<Order> ordersCompleted;
-mutex outLock;
-mutex orderLock;
 
 bool sellSeats(Order& order, vector<Seat>& seats)
 {
   this_thread::sleep_for(500ms);
-  //outLock.lock();
+  
   cout << white << order.color << order.custName << white << on_black;
-  //outLock.unlock();
+
   // if the seats in the order aren't already sold, mark them sold and return true
   bool allAvailable{ true };
-  // Go through the order. If the seat 
   for (auto& seatId : order.seatIds)
   {
     for (auto& seat : seats)
@@ -135,9 +126,7 @@ bool sellSeats(Order& order, vector<Seat>& seats)
       // If we find the seat and it's not available, order is ded.
       if (seat.id == seatId && !seat.available)
       {
-        //outLock.lock();
         cout << ": unavailable D:\n";
-        //outLock.unlock();
         allAvailable = false;
         break;
       }
@@ -145,9 +134,7 @@ bool sellSeats(Order& order, vector<Seat>& seats)
   }
   if (allAvailable)
   {
-    //outLock.lock();
     cout << ": Sold!\n";
-    //outLock.unlock();
     order.sold = true;
     ordersCompleted.push_back(order);
     // oh boy, we sure wasted some time there before marking the seats
@@ -165,14 +152,12 @@ bool sellSeats(Order& order, vector<Seat>& seats)
 
 void printOrder(Order& order)
 {
-  outLock.lock();
   cout << white << order.color << order.custName << white << on_black << ", seats: [";
   for (auto& seatId : order.seatIds)
   {
     cout << seatId << " ";
   }
   cout << "\b]\n";   // backspace removes the space after the last seat id
-  outLock.unlock();
 }
 
 void showSeats(vector<Seat>& seats)
@@ -197,12 +182,12 @@ void showSeats(vector<Seat>& seats)
   cout << "|" << endl;
   //cout << line << endl;
 }
+
 // LIST OF SEATS AVAILABLE
 // LIST OF TICKETS SOLD
 // 5 cashiers = threads
 // 1 cashier can do all the work in a loop
 // It gets crazy for the cashiers.
-
 int main()
 {
   auto orders = vector<Order>{
